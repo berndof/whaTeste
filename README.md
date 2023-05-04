@@ -15,3 +15,7 @@ sudo apt install docker.io docker-compose -y
 ```bash
 sudo git clone https://github.com/berndof/whaTeste.git && cd whaTeste && chmod +x install.sh
 ```
+
+```bash
+sudo git clone https://github.com/berndof/whaTeste.git && cd whaTeste && chmod +x install.sh
+```
