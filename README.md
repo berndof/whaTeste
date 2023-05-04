@@ -15,5 +15,5 @@ sudo systemctl start docker
 - Clone o repositório do GitHub para seu sistema:
 
 ```bash
-sudo git clone https://github.com/berndof/whaTeste.git && cd whaTeste && chmod +x install.sh
+ git clone https://github.com/berndof/whaTeste.git && cd whaTeste && chmod +x install.sh
 ```
