@@ -1,28 +1,44 @@
 #!/bin/bash
-read -p "MySQL root password: " MYSQL_ROOT_PASSWORD
-read -p "MySQL database name: " MYSQL_DATABASE
-read -p "MySQL user name: " MYSQL_USER
-read -p "MySQL user password: " MYSQL_PASSWORD
-read -p "Database port (leave blank for default 3306): " DB_PORT
-read -p "PHPMyAdmin port (leave blank for default 8080): " PHPMYADMIN_PORT
 
-export MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
-export MYSQL_DATABASE=$MYSQL_DATABASE
-export MYSQL_USER=$MYSQL_USER
-export MYSQL_PASSWORD=$MYSQL_PASSWORD
-export DB_PORT=$DB_PORT
-export PHPMYADMIN_PORT=$PHPMYADMIN_PORT
+# Definindo as cores
+green='\033[0;32m'
+yellow='\033[1;33m'
+NC='\033[0m'
 
-chmod +x install.sh
+function progress_bar {
+    local duration=${1}
 
-docker-compose up -d
+    already_done() { for ((done=0; done<$elapsed; done=done+1)); do printf "▇"; done }
+    remaining() { for ((remain=$elapsed; remain<$duration; remain=remain+1)); do printf " "; done }
+    percentage() { printf "| %s%%" $(( (($elapsed)*100)/($duration)*100/100 )); }
 
-printf "\n\nAs seguintes configurações foram definidas:\n"
-printf "--------------------------------------------\n"
-printf "  MySQL root password: %s\n" "$MYSQL_ROOT_PASSWORD"
-printf "  MySQL database name: %s\n" "$MYSQL_DATABASE"
-printf "  MySQL user name: %s\n" "$MYSQL_USER"
-printf "  MySQL user password: %s\n" "$MYSQL_PASSWORD"
-printf "  Database port: %s\n" "${DB_PORT:-3306}"
-printf "  PHPMyAdmin port: %s\n" "${PHPMYADMIN_PORT:-8080}"
+    elapsed=0
+    while [ $elapsed -lt $duration ]; do
+        printf "${green}"
+        already_done; remaining; percentage
+        printf "${NC}"
+        ((elapsed=elapsed+1))
+        sleep 1
+        printf "\r"
+    done
+    printf "${green}"
+    already_done; remaining; percentage
+    printf "${NC}\n"
+}
 
+
+# Atualizar pacotes do sistema
+# Atualizando os pacotes
+echo -e "${yellow}Atualizando os pacotes...${NC}"
+sudo apt update && sudo apt upgrade -y
+
+# Instalar Docker.io, Docker-compose e Docker
+echo -e "${yellow}Instalando o Docker...${NC}"
+progress_bar 5 # Define a duração da barra de progresso em segundos (5s)
+sudo apt-get install docker.io docker-compose -y
+
+# Clonando o repositório
+cd ~
+echo -e "${yellow}Clonando o repositório...${NC}"
+git clone <placeholder>
+cd <placeholder>
