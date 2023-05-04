@@ -1,26 +1,31 @@
 version: '3'
 services:
-  db:
-    image: mysql:latest
-    restart: always
+  mysql:
+    container_name: mysql-local
+    image: mysql:5.6.35
+    network_mode: host
+    restart: 'no'
+    tty: true
+    expose:
+      - 3306
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-    ports:
-      - "${DB_PORT:-3306}:3306"
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: whaticketdb
+      MYSQL_USER: whaticket
+      MYSQL_PASSWORD: whaticket
     volumes:
-      - db_data:/var/lib/mysql
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin:latest
-    restart: always
-    environment:
-      PMA_HOST: db
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-    ports:
-      - "${PHPMYADMIN_PORT:-8080}:80"
+      - mysql:/var/lib/mysql
+  php:
+    container_name: php-local
+    image: php:7.2-apache
+    network_mode: host
+    build:
+      context: ./
+      dockerfile: ./php.Dockerfile
+    expose:
+      - 80
+    volumes:
+      - ./:/var/www/html
 volumes:
-  db_data:
+  mysql:
+  html:
