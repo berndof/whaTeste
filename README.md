@@ -13,7 +13,7 @@ sudo apt install docker.io docker-compose -y
 - Clone o repositório do GitHub para seu sistema:
 
 ```bash
-git clone https://github.com/seu-usuario/nome-do-repositorio.git
+git clone https://github.com/berndof/Instalcaoubuntu.git
 ```
 
 - Navegue até o diretório onde o script de instalação install.sh está localizado:
