@@ -42,3 +42,30 @@ cd ~
 echo -e "${yellow}Clonando o repositório...${NC}"
 git clone <placeholder>
 cd <placeholder>
+
+
+
+echo "Digite a senha do root do banco de dados [default: root]: "
+read -s MYSQL_ROOT_PASSWORD
+echo -e "\033[1A\033[0K" # Limpa a linha anterior
+sed -i "s/^MYSQL_ROOT_PASSWORD=.*/MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}/g" .env
+tput cr
+
+echo "Digite o nome do banco de dados [default: whaticketdb]: "
+read MYSQL_DATABASE
+echo -e "\033[1A\033[0K${MYSQL_DATABASE}" # Limpa a linha anterior e mostra a entrada atual
+sed -i "s/^MYSQL_DATABASE=.*/MYSQL_DATABASE=${MYSQL_DATABASE}/g" .env
+tput cr
+
+echo "Digite a porta do banco de dados [default: 3306]: "
+read MYSQL_PORT
+echo -e "\033[1A\033[0K${MYSQL_PORT}" # Limpa a linha anterior e mostra a entrada atual
+sed -i "s/^MYSQL_PORT=.*/MYSQL_PORT=${MYSQL_PORT}/g" .env
+tput cr
+
+
+echo "Digite a porta do banco de dados [default: 3306]: "
+read MYSQL_PORT
+echo -e "\033[1A\033[0K${MYSQL_PORT}" # Limpa a linha anterior e mostra a entrada atual
+sed -i "s/^MYSQL_PORT=.*/MYSQL_PORT=${MYSQL_PORT}/g" .env
+tput cr
